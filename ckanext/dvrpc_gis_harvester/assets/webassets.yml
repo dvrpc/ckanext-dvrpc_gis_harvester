@@ -1,0 +1,14 @@
+# dvrpc_gis_harvester-js:
+#   filter: rjsmin
+#   output: ckanext-dvrpc_gis_harvester/%(version)s-dvrpc_gis_harvester.js
+#   contents:
+#     - js/dvrpc_gis_harvester.js
+#   extra:
+#     preload:
+#       - base/main
+
+# dvrpc_gis_harvester-css:
+#   filter: cssrewrite
+#   output: ckanext-dvrpc_gis_harvester/%(version)s-dvrpc_gis_harvester.css
+#   contents:
+#     - css/dvrpc_gis_harvester.css
