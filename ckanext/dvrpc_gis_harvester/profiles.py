@@ -25,6 +25,15 @@ class GISProfile(RDFProfile):
         if "notes" not in dataset_dict:
             dataset_dict["notes"] = "No description"
 
+        # remove Shapefiles from list of resources
+        # (these should be accessed via filesystem)
+        if "resources" in dataset_dict:
+            updated_resources = []
+            for resource in dataset_dict["resources"][:]:
+                if resource["name"] != "Shapefile":
+                    updated_resources.append(resource)
+            dataset_dict["resources"] = updated_resources
+
         # this one still needs work
         dataset_dict["use_limitations"] = "unrestricted_without_agreement"
 
