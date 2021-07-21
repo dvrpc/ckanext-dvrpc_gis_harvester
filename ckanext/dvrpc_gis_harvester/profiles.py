@@ -1,4 +1,8 @@
+import logging
+
 from ckanext.dcat.profiles import RDFProfile
+
+log = logging.getLogger(__name__)
 
 
 class GISProfile(RDFProfile):
@@ -16,7 +20,12 @@ class GISProfile(RDFProfile):
         dataset_dict["staff_contact_email"] = "slawrence@dvrpc.org"
         dataset_dict["category"] = "GIS"
         dataset_dict["posting_frequency"] = "as_needed"
-        dataset_dict["use_limitations"] = "unrestricted_without_agreement"
         dataset_dict["agency_owner"] = "dvrpc"
+        dataset_dict["tags"] = []
+        if "notes" not in dataset_dict:
+            dataset_dict["notes"] = "No description"
+
+        # this one still needs work
+        dataset_dict["use_limitations"] = "unrestricted_without_agreement"
 
         return dataset_dict
