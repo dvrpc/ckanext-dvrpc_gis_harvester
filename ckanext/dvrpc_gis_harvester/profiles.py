@@ -1,12 +1,12 @@
 import logging
 
 from rdflib.namespace import Namespace
-from rdflib.namespace import RDF
+from rdflib.term import URIRef
 
 from ckanext.dcat.profiles import RDFProfile
 
 DCT = Namespace("http://purl.org/dc/terms/")
-pod = Namespace("https://project-open-data.cio.gov/v1.1/schema/")
+
 log = logging.getLogger(__name__)
 
 
@@ -17,6 +17,7 @@ class GISProfile(RDFProfile):
     """
 
     def parse_dataset(self, dataset_dict, dataset_ref):
+        log.debug("Parsing with DVRPC's GISProfile")
         dataset_dict["staff_contact"] = "Sean Lawrence"
         dataset_dict["staff_contact_email"] = "slawrence@dvrpc.org"
         dataset_dict["category"] = "GIS"
@@ -36,22 +37,17 @@ class GISProfile(RDFProfile):
                     updated_resources.append(resource)
             dataset_dict["resources"] = updated_resources
 
-        # need to reach into the rdf graph to get the "accessLevel" field.
-        # first loop over all the datasets, and for the this dataset (id'd by dataset_ref),
-        # pull the field out of the "triple" (subject, predicate, object) that it's in.
-        # see <https://rdflib.readthedocs.io/en/stable/gettingstarted.html> for more info
+        # use rdflib's graph.value() convenience function to get the value of accessLevel
+        # see <https://rdflib.readthedocs.io/en/stable/intro_to_graphs.html#graph-methods-for-accessing-triples>
 
-        # there may be a more efficient way, but for now this works
+        access_level = self.g.value(
+            subject=dataset_ref,
+            predicate=URIRef("https://project-open-data.cio.gov/v1.1/schema#accessLevel"),
+        )
 
-        for s, p, o, g in self.g.quads((None, RDF.type, None, None)):
-            if s == dataset_ref:
-                for subj, pred, obj in g:
-                    if "accessLevel" in pred:
-                        if str(obj) == "public":
-                            dataset_dict["use_limitations"] = "unrestricted_without_agreement"
-                        elif str(obj) == "org":
-                            dataset_dict["use_limitations"] = "restricted_all_staff"
-
-                break  # no need to continue further in the loop once we have this
+        if str(access_level) == "public":
+            dataset_dict["use_limitations"] = "unrestricted_without_agreement"
+        elif str(access_level) == "org":
+            dataset_dict["use_limitations"] = "restricted_all_staff"
 
         return dataset_dict
