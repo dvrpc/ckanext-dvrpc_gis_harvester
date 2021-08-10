@@ -28,18 +28,22 @@ class GISProfile(RDFProfile):
         if "notes" not in dataset_dict:
             dataset_dict["notes"] = "No description"
 
-        # remove Shapefiles from list of resources
-        # (these should be accessed via filesystem)
+        # limit resources imported
         if "resources" in dataset_dict:
             updated_resources = []
             for resource in dataset_dict["resources"][:]:
-                if resource["name"] != "Shapefile":
+                if resource["name"] in [
+                    "GeoJSON",
+                    "Esri Rest API",
+                    "DVRPC GIS Catalog",
+                    "Metadata XML",
+                    "Network Location",
+                ]:
                     updated_resources.append(resource)
             dataset_dict["resources"] = updated_resources
 
         # use rdflib's graph.value() convenience function to get the value of accessLevel
         # see <https://rdflib.readthedocs.io/en/stable/intro_to_graphs.html#graph-methods-for-accessing-triples>
-
         access_level = self.g.value(
             subject=dataset_ref,
             predicate=URIRef("https://project-open-data.cio.gov/v1.1/schema#accessLevel"),
