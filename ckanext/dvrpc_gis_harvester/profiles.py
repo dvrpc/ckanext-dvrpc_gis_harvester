@@ -39,7 +39,13 @@ class GISProfile(RDFProfile):
                     "Metadata XML",
                     "Network Location",
                 ]:
+                    # change the field that the value for Network Location does
+                    if resource["name"] == "Network Location" and "access_url" in resource:
+                        resource["local_path"] = resource["access_url"]
+                        del resource["url"]
+                        del resource["description"]
                     updated_resources.append(resource)
+
             dataset_dict["resources"] = updated_resources
 
         # use rdflib's graph.value() convenience function to get the value of accessLevel
