@@ -18,8 +18,8 @@ class GISProfile(RDFProfile):
 
     def parse_dataset(self, dataset_dict, dataset_ref):
         log.debug("Parsing with DVRPC's GISProfile")
-        dataset_dict["staff_contact"] = "Sean Lawrence"
-        dataset_dict["staff_contact_email"] = "slawrence@dvrpc.org"
+        dataset_dict["staff_contact"] = "DVRPC GIS"
+        dataset_dict["staff_contact_email"] = "gis@dvrpc.org"
         dataset_dict["category"] = "GIS"
         dataset_dict["posting_frequency"] = "as_needed"
         dataset_dict["agency_owner"] = "dvrpc"
