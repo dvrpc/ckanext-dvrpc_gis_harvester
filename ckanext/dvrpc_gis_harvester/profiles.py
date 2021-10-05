@@ -23,6 +23,7 @@ class GISProfile(RDFProfile):
         dataset_dict["category"] = "GIS"
         dataset_dict["posting_frequency"] = "as_needed"
         dataset_dict["agency_owner"] = "dvrpc"
+        dataset_dict["agency_owner_alt"] = ""
         dataset_dict["tags"] = []
 
         if "notes" not in dataset_dict:
