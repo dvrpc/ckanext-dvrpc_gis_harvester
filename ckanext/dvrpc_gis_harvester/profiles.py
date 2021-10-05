@@ -43,8 +43,10 @@ class GISProfile(RDFProfile):
                     # change the field that the value for Network Location does
                     if resource["name"] == "Network Location" and "access_url" in resource:
                         resource["local_path"] = resource["access_url"]
-                        del resource["url"]
-                        del resource["description"]
+                        if resource["url"]:
+                            del resource["url"]
+                        if resource["description"]:
+                            del resource["description"]
                     updated_resources.append(resource)
 
             dataset_dict["resources"] = updated_resources
