@@ -20,11 +20,60 @@ class GISProfile(RDFProfile):
         log.debug("Parsing with DVRPC's GISProfile")
         dataset_dict["staff_contact"] = "DVRPC GIS"
         dataset_dict["staff_contact_email"] = "gis@dvrpc.org"
-        dataset_dict["category"] = "GIS"
+        dataset_dict["category"] = ["GIS"]
         dataset_dict["posting_frequency"] = "as_needed"
         dataset_dict["agency_owner"] = "dvrpc"
         dataset_dict["agency_owner_alt"] = ""
         dataset_dict["tags"] = []
+
+        # parse the extras/theme field (which looks like a list, but is a string),
+        # and put additional values into the category list
+        if "extras" in dataset_dict:
+            print("found extras")
+            for each in dataset_dict["extras"]:
+                if each["key"] == "theme":
+                    if "Biota" in each["value"]:
+                        dataset_dict["category"].append("Environment")
+                    if "Boundaries" in each["value"]:
+                        dataset_dict["category"].append("Boundaries")
+                    if "Demographics" in each["value"]:
+                        dataset_dict["category"].append("Demographics & Housing")
+                    if "Equity and Diversity" in each["value"]:
+                        dataset_dict["category"].append("Equity & Diversity")
+                    if "Economy" in each["value"]:
+                        dataset_dict["category"].append("Economy")
+                    if "Environment" in each["value"]:
+                        dataset_dict["category"].append("Environment")
+                    if "Freight" in each["value"]:
+                        dataset_dict["category"].append("Freight & Aviation")
+                    if "Geology" in each["value"]:
+                        dataset_dict["category"].append("Environment")
+                    if "Hydrology" in each["value"]:
+                        dataset_dict["category"].append("Environment")
+                    if "Imagery and Elevation" in each["value"]:
+                        dataset_dict["category"].append("Imagery")
+                    if "Location" in each["value"]:
+                        dataset_dict["category"].append("Boundaries")
+                    if "Parcels" in each["value"]:
+                        dataset_dict["category"].append("Planning")
+                    if "Planning" in each["value"]:
+                        dataset_dict["category"].append("Planning")
+                    if "Long-Range Plan" in each["value"]:
+                        dataset_dict["category"].append("Long-Range Plan")
+                    if "Structures" in each["value"]:
+                        dataset_dict["category"].append("Planning")
+                    if "Bicycle and Pedestrian" in each["value"]:
+                        dataset_dict["category"].append("Bicycle & Pedestrian")
+                    if "Highway" in each["value"]:
+                        dataset_dict["category"].append("Highway")
+                    if "TIP" in each["value"]:
+                        dataset_dict["category"].append("TIP")
+                    if "Transit" in each["value"]:
+                        dataset_dict["category"].append("Transit")
+                    if "Safety and Health" in each["value"]:
+                        dataset_dict["category"].append("Safety & Health")
+                    if "Utilities" in each["value"]:
+                        dataset_dict["category"].append("Environment")
 
         if "notes" not in dataset_dict:
             dataset_dict["notes"] = "No description"
