@@ -20,16 +20,13 @@ class GISProfile(RDFProfile):
         log.debug("Parsing with DVRPC's GISProfile")
         dataset_dict["staff_contact"] = "DVRPC GIS"
         dataset_dict["staff_contact_email"] = "gis@dvrpc.org"
-        dataset_dict["category"] = ["GIS"]
-        dataset_dict["posting_frequency"] = "as_needed"
         dataset_dict["agency_owner"] = "dvrpc"
         dataset_dict["agency_owner_alt"] = ""
-        dataset_dict["tags"] = []
 
         # parse the extras/theme field (which looks like a list, but is a string),
         # and put additional values into the category list
+        dataset_dict["category"] = ["GIS"]
         if "extras" in dataset_dict:
-            print("found extras")
             for each in dataset_dict["extras"]:
                 if each["key"] == "theme":
                     if "Biota" in each["value"]:
@@ -77,6 +74,26 @@ class GISProfile(RDFProfile):
 
         if "notes" not in dataset_dict:
             dataset_dict["notes"] = "No description"
+
+        # We don't use tags in CKAN, but in the GIS datasets, we use the "keywords"
+        # field (which gets automatically converted to "tags") to contain posting freq
+        dataset_dict["posting_frequency"] = "as_needed"
+
+        if "tags" in dataset_dict:
+            for tag in dataset_dict["tags"]:
+                if tag["name"] == "daily":
+                    dataset_dict["posting_frequency"] = "daily"
+                if tag["name"] == "weekly":
+                    dataset_dict["posting_frequency"] = "weekly"
+                if tag["name"] == "quarterly":
+                    dataset_dict["posting_frequency"] = "quarterly"
+                if tag["name"] == "biannually":
+                    dataset_dict["posting_frequency"] = "biannually"
+                if tag["name"] == "annually":
+                    dataset_dict["posting_frequency"] = "annually"
+
+        # now delete all the tags
+        dataset_dict["tags"] = []
 
         # limit resources imported
         if "resources" in dataset_dict:
