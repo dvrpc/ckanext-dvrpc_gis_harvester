@@ -128,5 +128,6 @@ class GISProfile(RDFProfile):
             dataset_dict["use_limitations"] = "unrestricted_without_agreement"
         elif str(access_level) == "org":
             dataset_dict["use_limitations"] = "restricted_all_staff"
+            dataset_dict["private"] = "True"
 
         return dataset_dict
