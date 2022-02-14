@@ -25,7 +25,7 @@ class GISProfile(RDFProfile):
 
         # parse the extras/theme field (which looks like a list, but is a string),
         # and put additional values into the category list
-        dataset_dict["category"] = ["GIS"]
+        dataset_dict["category"] = []
         if "extras" in dataset_dict:
             for each in dataset_dict["extras"]:
                 if each["key"] == "theme":
