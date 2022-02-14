@@ -107,12 +107,13 @@ class GISProfile(RDFProfile):
                     "Network Location",
                 ]:
                     # change the field that the value for Network Location does
-                    if resource["name"] == "Network Location" and "access_url" in resource:
+                    if resource["name"].lower() == "network location" and "access_url" in resource:
                         resource["local_path"] = resource["access_url"]
-                        if resource["url"]:
-                            del resource["url"]
-                        if resource["description"]:
-                            del resource["description"]
+                        if resource.get("url"):
+                            resource["url"] = ""
+                    if resource["name"].lower() == "esri rest api":
+                        if resource.get("url"):
+                            resource["url"] += "?f=pjson"
                     updated_resources.append(resource)
 
             dataset_dict["resources"] = updated_resources
