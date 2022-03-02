@@ -111,9 +111,6 @@ class GISProfile(RDFProfile):
                         resource["local_path"] = resource["access_url"]
                         if resource.get("url"):
                             resource["url"] = ""
-                    if resource["name"].lower() == "esri rest api":
-                        if resource.get("url"):
-                            resource["url"] += "?f=pjson"
                     updated_resources.append(resource)
 
             dataset_dict["resources"] = updated_resources
