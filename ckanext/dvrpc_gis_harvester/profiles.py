@@ -61,8 +61,8 @@ class GISProfile(RDFProfile):
                         dataset_dict["category"].append("Planning")
                     if "Bicycle and Pedestrian" in each["value"]:
                         dataset_dict["category"].append("Bicycle & Pedestrian")
-                    if "Highway" in each["value"]:
-                        dataset_dict["category"].append("Highway")
+                    if "Roadways" in each["value"]:
+                        dataset_dict["category"].append("Roadways")
                     if "TIP" in each["value"]:
                         dataset_dict["category"].append("TIP")
                     if "Transit" in each["value"]:
