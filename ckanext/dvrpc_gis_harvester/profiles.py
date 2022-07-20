@@ -20,8 +20,15 @@ class GISProfile(RDFProfile):
         log.debug("Parsing with DVRPC's GISProfile")
         dataset_dict["staff_contact"] = "DVRPC GIS"
         dataset_dict["staff_contact_email"] = "gis@dvrpc.org"
-        dataset_dict["agency_owner"] = "dvrpc"
-        dataset_dict["agency_owner_alt"] = ""
+
+        # use rdflib's graph.value() convenience function to get the value of source (which is
+        # named "agency" in the GIS data catalog)
+        # see <https://rdflib.readthedocs.io/en/stable/intro_to_graphs.html#graph-methods-for-accessing-triples>
+        source = self.g.value(
+            subject=dataset_ref,
+            predicate=URIRef("http://www.w3.org/ns/dcat#agency"),
+        )
+        dataset_dict["source"] = source
 
         # parse the extras/theme field (which looks like a list, but is a string),
         # and put additional values into the category list
