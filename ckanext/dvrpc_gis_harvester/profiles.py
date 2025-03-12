@@ -30,6 +30,9 @@ class GISProfile(RDFProfile):
         )
         dataset_dict["source"] = source
 
+        # assign geo-spatial data type
+        dataset_dict["dataset_level"] = "Geospatial"
+
         # parse the extras/theme field (which looks like a list, but is a string),
         # and put additional values into the category list
         dataset_dict["category"] = []
