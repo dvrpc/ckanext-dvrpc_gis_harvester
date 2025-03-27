@@ -78,7 +78,7 @@ class GISProfile(RDFProfile):
                     if "Transit" in each["value"]:
                         dataset_dict["category"].append("Transit")
                     if "Transportation" in each["value"]:
-                        dataset_dict["category"].append("Transit")    
+                        dataset_dict["category"].append("Transit")
                     if "Safety and Health" in each["value"]:
                         dataset_dict["category"].append("Safety & Health")
                     if "Utilities" in each["value"]:
