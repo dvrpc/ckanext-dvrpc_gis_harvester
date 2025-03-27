@@ -55,7 +55,7 @@ class GISProfile(RDFProfile):
                         dataset_dict["category"].append("Freight & Aviation")
                     if "Geology" in each["value"]:
                         dataset_dict["category"].append("Environment")
-                    if "Hydrology" in each["value"]:
+                    if "Hydrography" in each["value"]:
                         dataset_dict["category"].append("Environment")
                     if "Imagery and Elevation" in each["value"]:
                         dataset_dict["category"].append("Imagery")
